@@ -1,0 +1,788 @@
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="Forza, FM5, FH2, FM6, FM7, FM4, FH3, Forza Motorsport, Tuning Calculator, Forza Tuning, FM6 Tuning, FM7 Tuning, FM5 Tuning, FH2 Tuning, FH3 Tuning, FM4 Tuning, Up 2 Speed Customs, Lou-ne-tunes, U2SC, Forza Horizon, Forza Horizon 3, Forza Motorsport 6, Forza Motorsport 7, Forza Motorsport 5, Forza Motorsport 4, justlou72, lou-ne-tunes, Lou's Tunes">
+	<!-- Edit the Three lines below as needed -->
+	<meta name="description" content="BG55.COM FTC Assistant">
+	<title>BG55.COM Upgrade/Tuning Assistant</title>
+	<!-- -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap.css" media="screen" rel="stylesheet">
+	<script src="js/npm.js"></script>
+	<script src="js/bootswatch.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body class=" hasGoogleVoiceExt" style="background-color: #1a1a1a;">
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-main">
+				<ul class="nav navbar-nav">
+					<li><a href="bg55ftc-main.php">FTC Main</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Other Versions <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="bg55ftc-main.php">Main Forza Calculator</a></li>
+							<li><a href="bg55ftc-main-fh5.php">FH5 Only Calculator</a></li>
+							<li><a href="bg55ftc-classic.php">Classic Calculator</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">FTC Resources <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="https://docs.google.com/spreadsheets/d/1raqqG7S6FKr1omq2ooYOGtJcj0RJus3w1uqer1e5S4c/edit?usp=sharing" target="_blank">justLou72's FM7 Lists &amp; Guides</a></li>
+							<li><a href="fm7-tuning-help.html" target="_blank">Forza Upgrades &amp; Tuning Assistant</a></li>
+                            <li><a href="https://docs.google.com/spreadsheets/d/1mO9KO6Luo6LCEB-JdwJs8MH0i_I6QXTcx4xK4GN4Wjs/edit?usp=sharing" target="_blank">justLou72's FM6/FH3 Lists &amp; Guides</a></li>
+							<li>-------------------------</li>
+							<li><a href="https://docs.google.com/spreadsheets/d/14M2PCuOfRivmSLGKSDCNWyRpIuUSh9Nxh2CWPA_ngXU" target="_blank">Feuerdog's FD Tuner 1.4 Calculator</a></li>
+                            <li><a href="https://www.dltuning.co.uk/" target="_blank">Dave Lacey's DLTuning Calculator</a></li>
+							<li>-------------------------</li>
+							<li><a href="https://forums.forzamotorsport.net/turn10_postst132673_FH4-Engine-Swap-List-and-other-engine-details.aspx" target="_blank">FH4 Engine Swap List &amp; Details</a></li>
+							<li><a href="https://forums.forzamotorsport.net/turn10_postst104271_FM7-Engine-Swap-List-and-other-engine-details.aspx" target="_blank">FM7 Engine Swap List &amp; Details</a></li> 
+							<li><a href="https://forums.forzamotorsport.net/turn10_postst76641_FH3-Engines-List.aspx" target="_blank">FH3 Engine SwapList &amp; Details</a></li>
+							<li><a href="http://forums.forzamotorsport.net/turn10_postst40816_FM6-Engine-Swap-List.aspx" target="_blank">FM6 Engine Swap List &amp; Details</a></li> 
+							<li>-------------------------</li>
+							<li><a href="https://docs.google.com/spreadsheets/d/1xI07iE3Y1Aqcmx30Yp3Aq8dCbOCMabjYCBwGnFsF3X0/edit?usp=sharing" target="_blank">ManteoMax's Forza Motorsport 7 Spreadsheets</a></li>
+							<li><a href="https://docs.google.com/spreadsheets/d/1m979pSIzSlE1HQH0tth0_2ZGqc1RNMPRFY908ihgv8I/edit?usp=sharing" target="_blank">ManteoMax's Forza Horizon 3 Spreadsheets</a></li>
+							<li><a href="https://docs.google.com/spreadsheets/d/1fJjy1c3hdHcWey9rsu6MfEtCdGKEOA_uvSCeOCvhfkg/edit?usp=sharing" target="_blank">ManteoMax's Forza Motorsport 6 Spreadsheets</a></li>
+							<li>-------------------------</li>
+							<li><a href="http://www.rapid-racer.com/suspension-tuning.php" target="_blank">Rapid-Racer.com Suspension Tuning Guide</a></li>
+							<li><a href="http://rapidtables.com/convert/color/index.htm" target="_blank">Color Conversion (to HSL)</a></li>
+						</ul>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+                    <li><a href="fm7-tuning-help.html" target="_blank">Help</a></li>
+					<li><a href="http://discord.up2speedcustoms.com/" target="_blank">Discord</a></li>
+				</ul>
+			</div>
+		</div>
+    </div>
+
+	<div class="container-fluid" style="padding-left: 10%;padding-right: 10%">
+		<br>
+	<div class="jumbotron" id="banner">
+		<h3 class="text-primary">BG55.COM Upgrading/Tuning Assistant</h3>
+	</div>
+
+    <!-- =========== -->
+    <!-- TABLE OF CONTENTS -->
+    <!-- =========== -->
+	<div class="bs-docs-section">
+		<a name="index"></a>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-muted">
+						<div class="panel-body">
+							<h5>Index</h5>
+							<ul>
+								<li><a href="#upgrades">Build/Upgrade Guide</a></li>
+								<li><a href="#basetune">Base-Tuning Guide</a></li>
+								<li><a href="#finetune">Fine-Tuning Guide</a></li>
+								<li><a href="#fm7help">FM7 In-Game Tuning Help Text</a></li>
+                                <ul>
+                                    <li><a href="#tires">Tires</a></li>
+                                    <li><a href="#gears">Gearing</a></li>
+                                    <li><a href="#alignment">Alignment</a></li>
+                                    <li><a href="#arb">Anti-Roll Bars (ARB)</a></li>
+                                    <li><a href="#springs">Springs &amp; Ride Height</a></li>
+                                    <li><a href="#damping">Damping</a></li>
+                                    <li><a href="#aero">Aero</a></li>
+                                    <li><a href="#brake">Brakes</a></li>
+                                    <li><a href="#diff">Differential</a></li>
+                                </ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <!-- =========== -->
+    <!-- =========== -->
+
+    <!-- =========== -->
+    <!-- UPGRADE GUIDE -->
+    <!-- =========== -->
+	<div class="bs-docs-section">
+        <a name="upgrades"></a>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-success">
+						<div class="panel-body">
+                            <h4>Building a Vehicle (Upgrades)</h4>
+							<p><i><Strong>NOTE:</Strong> This page exists to assist U2SC community in upgrading, tuning and fine-tuning their vehicles in Forza.  This is a collection of knowledge from the U2SC community, and we welcome everyone to join us on the <a href="http://discord.up2speedcustoms.com/" target="_blank">U2SC Discord</a>.</i></p>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+					   </div>
+					</div>
+				</div>
+                <!-- =========== -->
+				<div class="col-lg-12">
+					<div class="bs-component">
+						<div class="panel panel-success">
+							<div class="panel-body">
+								<h5>Upgrades &amp; Tuning Notes</h5>
+								<p>It all starts with the build, and the tune is the polish.  If the build (upgraded car) is a turd, the tune polish the turd.  You will still have a turd, but it will be shinier!  Most vehicles cannot be built/tuned to do everything and remain competitive, and most vehicles are either predisposed to either grip (momentum) or speed (power).  Very few cars can be both, and even fewer can be both at the same time!  Build to the vehicle's strengths, and shy away from making shiny turds!</p>
+							</div>
+							<p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+                <!-- =========== -->
+                <!-- Column -->
+				<div class="col-lg-6">
+					<div class="bs-component">
+                    <a name=""></a>
+						<div class="panel panel-success">
+							<div class="panel-body">
+                                <h5>Step 1: Starting Off</h5>
+                                <p>These are all the parts that should be completed first</p>
+                                <ol>
+                                    <li><h6>Homologation Division or Spec Race Requirements</h6>
+                                        With Homologation in FM7 as well as leagues, rivals and race events that require specific parts are minimums to be met, always do these first (like installing the required compound for homologation spec).  After all required parts are installed, it's safe to move on to the rest.</li>
+                                    <li><h6>Race Differential</h6>
+                                        ALWAYS install the Race Differential.  It's FREE PI = Win-Win</li>
+                                    <li><h6>Conversions</h6>
+                                        ALL Conversions should be completed first!  Engine, Drivetrain, and Aspiration conversion should be completed before installing any other parts.  These conversions will alter the BASE PI (up or down) and might alter your build strategy.  If you cannot get the stock engine upgraded to the target PI or the engine just doesn't have it, you will need to swap engines or install a turbo or supercharger (SC).  Twin Turbos and Roots superchargers are the better choices (better as they are upgraded), but those are not always options.  If you are looking for top end, then supercharger is the way to go.  If you are looking for lower end torque and acceleration, turbo is the way to go.  As far as engines are concerned, that is dealer's choice!</li>
+                                    <li><h6>Clutch &amp; Transmission</h6>
+                                        <font color="white"><b>Clutch:</b></font> If you are going with a clutch upgrade, do it before moving on to handling and braking.  Otherwise, wait until later to use the clutch along with the drive shaft and flywheel as PI filler.  If you don’t install a race transmission, you might want to install a race clutch on slower shifting cars.  If you only use manual, shift speed is important, and the PI for the race clutch is usually much less than the PI for a Race Transmission.
+                                        <br><font color="white"><b>Transmission:</b></font> If you are going with a transmission upgrade, do it before moving on to handling.  When the Street Transmission is available, you should install it, it's well worth the PI cost.  Especially since it really opens up the top end on older cars.  Upgrading to a Sport transmission is rarely worth the PI except in some rare cases.  The Race Transmission, while more PI, is a much better choice if the Stock/Street transmission doesn't work well.  If you need faster shifts, the Clutch is a much more PI cost effective way to go.</li>
+                                </ol>
+							</div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name=""></a>
+						<div class="panel panel-success">
+							<div class="panel-body">
+                                <h5>Step 2: Upgrade Handling &amp; Braking</h5>
+                                <p>Get the car to the handling number FIRST.  This will usually indicate whether or not the build is going to work for the class you have chosen.</p>
+                                <ol>
+                                    <li><h6>Brakes</h6>
+                                        <i><b>Race Brakes are essential for tuning/performance.</b></i>
+                                        <br>There are a handful of cases when you will only be able to install Springs &amp; ARB before running out of PI room.  You can try installed heavier rims, increasing the rim size, installing a roll cage, and/or installing Forza (race) aero bits to give more PI headroom.  This happens sometimes with cars that are nearly at the PI limit in stock form or with cars you are detuning from a higher class.</li>
+                                    <li><h6>Springs &amp; Dampers</h6>
+                                        <i><b>Race Springs &amp; Dampers are essential for tuning/performance.</b></i>
+                                        <br>Race ARBs take priority over Race Springs in tight PI situations.  Tuning ARBs w/o springs and dampers works pretty well where tuning springs and dampers w/o race ARBs can get very tricky.</li>
+                                    <li><h6>Anti-Roll Bars</h6>
+                                        <i><b>Race Anti-Roll Bars are essential for tuning/performance.</b></i>
+                                        <br>On those rare builds with super tight PI, where you cannot install both Race ARB and Race springs, ARB's should be a higher priority.  ARBs alone have a bigger effect and easier to tune than springs, dampers and alignment without Race ARBs.</li>
+                                    <li><h6>Weight Reduction</h6>
+                                        Weight reduction increases acceleration, grip and braking, by reducing overall weight.  It will also help to bring the car closer to a 50/50 weight distribution.  If installing Race Weight Reduction puts you over your target Grip rating, scale it back until the desired rating is achieved.  Most builds I have this as Race, but some with limited PI space might stay stock, street or sport depending on the numbers.  When PI is at a premium, I try multiple parts combinations to get the best mix of Grip, Acceleration, Speed and Braking.  My target build type will dictate what is installed in tight PI situations.  Grip builds get as much weight reduction as possible, where power builds might not.</li>
+                                    <li><h6>Tire Compound &amp; Width</h6>
+                                        Remember to only install up to your target handling Number.
+                                        <br><font color="white"><b>1 - Compound:</b></font> In some older cars, going to sport or race tires will induce what I call "grip roll" which is where the suspension cannot handle the lateral grip and the car goes up on two wheels as if it wants to roll.  Some cars actually will roll (VW bus, GMC Vandura and several others).  This can be tuned out in some these cases with "creative" spring, ARB, and dampener settings.
+                                        <br><font color="white"><b>2 - Width:</b></font> Tire width does two things.  The first is it increases grip, but the secondly and more importantly, it increases traction at the drive wheels.  VERY important for RWD and FWD cars.  AWD cars can get away with skinnier tires, but width is still important.</li>
+                                    <li><h6>Rims &amp; Rim Diam</h6>
+                                        Since Forza does not differentiate between sprung and unsprung weight, all you are doing is reducing the overall weight of the car.  Increasing rim size also increases the weight of the car.  It will also change the handling and gearing of the car.  A good rule of thumb is to keep the aspect ratio between 30 and 45 (when possible).  Even though the will remove/add weight to the car, these upgrades are still more appearance than performance.</li>
+                                    <li><h6>Aero &amp; Cosmetics</h6>
+                                        Race/Sport aero is needed on most lobby/rivals builds for A-class and up except for pure speed builds where Aero isn't needed on the track.  B &amp; C class depend on the car/build.  D &amp; E class usually don't need it.</li>
+                                </ol>
+							</div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+    			<!-- =========== -->
+                <!-- Column -->
+				<div class="col-lg-6">
+					<div class="bs-component">
+                    <a name=""></a>
+						<div class="panel panel-success">
+							<div class="panel-body">
+                                <h5>Step 3: Upgrade Power &amp; Torque</h5>
+                                <p>The idea here is to install all of the non-weight affecting parts first, then boost, then weigh reducing, and finally the rest until you can no longer install any combination of engine parts within max PI range.</p>
+                                <ol>
+                                    <li><h6>Fuel System &amp; Ignition</h6>
+                                        In cars with Carburetors, only install the sport carb.  The race carb is heavy and should be installed after all other parts but before intercooler/engine cooling.</li>
+                                    <li><h6>Air Filter &amp; Intake Manifold</h6>
+                                        The street version of the Air Filter and the Street/Sport Intake don't reduce weight, so they can actually be installed before Cams.  Save the weight reducing parts for last.</li>
+                                    <li><h6>Camshaft and/or Displacement</h6>
+                                        Displacement is a great way to increase both power and torque.
+                                        <br>Upgrading the Cams is not always the best upgrade.  Especially when you are looking for torque.  However, in smaller/lighter cars and FWD cars, where torque can be problematic for the smaller tires or drive wheels, cams are a good choice.  In grip builds, cams can help out as well since maintaining momentum is more important than raw power.</li>
+                                    <li><h6>Valves &amp; Pistons</h6>
+                                        While these parts do reduce weight a bit, it's not so much that it impacts the PI like exhaust does.</li>
+                                    <li><h6>Forced Induction</h6>
+                                        While there is a weight increase (Race supercharger usually reduces weight), the power gains are worth it.</li>
+                                    <li><h6>Exhaust</h6>
+                                        If you are looking for the lightest possible car, then install this earlier, but in most builds, save this until last.</li>
+                                </ol>
+                            </div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name=""></a>
+						<div class="panel panel-success">
+							<div class="panel-body">
+                                <h5>Step 4: Topping Off the Build</h5>
+                                <p>Use these parts to fill in the last bit of PI.  Rim diameter can be done here too.</p>
+                                <ol>
+                                    <li><h6>Driveshaft, Flywheel &amp; Clutch</h6>
+                                        More often than not you can squeeze in on or two levels of driveshaft even if you are already at max PI</li>
+                                    <li><h6>Intercooler &amp; Engine Cooling</h6>
+                                        Lots of weight and usually little power.  I rarely install these unless I need to fill in the last few PI.</li>
+                                </ol>
+                           </div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+    			<!-- =========== -->
+			</div>
+		</div>
+	</div>
+    <!-- =========== -->
+    <!-- =========== -->
+
+    <!-- =========== -->
+    <!-- FINE-TUNING -->
+    <!-- =========== -->
+	<div class="bs-docs-section">
+        <a name="basetune"></a>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-warning">
+						<div class="panel-body">
+							<h4>Base Tuning a Vehicle</h4>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+                <!-- =========== -->
+				<div class="col-lg-12">
+					<div class="bs-component">
+						<div class="panel panel-warning">
+							<div class="panel-body">
+								<h5>Basic Tuning</h5>
+								<p>If you are not experienced at tuning and/or you are intimidated by tuning in Forza, there are tuning calculators to assist in generating a good base tune (starting point) for you.  Up 2 Speed Customs has one that is free.  <a href="u2scforzatuner.php">Use the U2SC Forza Tuning Calculators here!</a>  If you are willing to spend the time learning, then here are some notes on where to begin as well as fine-tuning once you have a good base tune.
+								<br>Also, remember to tune for YOUR driving style.  What works for you will not necessarily work for everyone else (and vice versa), but keep testing new ideas and learning.  The only way to become a better builder/tuner is to try new methods and experiment.</p>
+								
+								<h6>Step 1: Tire Pressure, Spring Rate &amp; Ride Height</h6>
+								<p>Tire pressure is used to provide optimal contact patch and tire temperatures in Forza.  Start with your tires at 30psi and do 1 lap on your test track.  Once you begin lap 2, open up telemetry and watch both the "Tires Misc." and "Heat" telemetry pages. For "Stock" and "Street" compounds, the optimal temperatures in Forza is between 180-195 F.  For "Sport" &amp; "Race" compounds, the optimal temperatures in Forza is between 200-210 F.</p>
+								<p>The optimal starting point for spring rate is to take half the total weight of the car and then multiply it by the front weight percentage.  That is the base front spring rate.  To get the rear spring rate, simply subtract the front spring rate from half the total weight.  The equations look like this
+								<ol>
+									<li>&lt;Front Spring Rate&gt; = (Weight/2) * &lt;Front Weight Percentage&gt;</li>
+									<li>&lt;Rear Spring Rate&gt; = (Weight/2) - &lt;Front Spring Rate&gt;</li>
+								</ol>
+								There's another method that's a bit more involved, and it's called the Xtreme Skils formula (not sure of the source).  This needs to be done for both the front and rear separately.
+								<ol>
+									<li>&lt;Rear Weight Percentage&gt; = 100 - &lt;Front Weight Percentage&gt;</li>
+									<li>Xf = (&lt;total weight&gt; + &lt;front downforce&gt;)/100
+									<br>Xr = (&lt;total weight&gt; + &lt;rear downforce&gt;)/100</li>
+									<li>Yf = (Xf * &lt;front weight %&gt;) / &lt;front ride height&gt;
+									<br>Yr = (Xr * &lt;rear weight %&gt;) / &lt;rear ride height&gt;</li>
+									<li>&lt;Front Spring Rate&gt; = (Yf * &lt;g-force at 60mph&gt;)
+									<br>&lt;Rear Spring Rate&gt; = (Yr * &lt;g-force at 60mph&gt;)</li>
+								</ol></p>
+								<p>Ride Height is one of the more powerful settings.  The best way to start is to leave the car at "stock" ride height and then watch the "Suspension" page in Telemetry on your test drive.  What you are looking for is the lowest ride height possible without bottoming out (or getting too close to bottoming out) the front and rear suspensions.  You do not have to keep the sliders symmetrical.</p>
+								
+								<h6>Step 2: Alignment, Dampers &amp; Anti-Roll Bars (ARB)</h6>
+								<p>For Alignment, there are a few factors here.  The best thing is to have starting ranges for each drive type, and then adjust the values when fine-tuning.  Here are some suggested starting values:
+								<ul>
+									<li><b>RWD</b>
+									<br>Toe 0.0 front &amp; -0.1 rear
+									<br>Camber -1.8 front &amp; -1.4 rear
+									<br>Caster 5.2 (front engine) &amp; 4.6 (mid/rear engine)</li>
+									<li><b>FWD</b>
+									<br>Toe +0.1 front &amp; 0.0 rear
+									<br>Camber -1.4 front &amp; -1.8 rear
+									<br>Caster 6.8</li>
+									<li><b>AWD</b>
+									<br>Toe +0.1 front &amp; -0.1 rear
+									<br>Camber -1.6 front &amp; -1.6 rear
+									<br>Caster 5.6 (front engine) &amp; 5.0 (mid/rear engine)</li>
+								</ul>
+								</p>
+								<p>For dampers, you want to start with Bump.  While test driving keep lowering bump until you feel the car start to bounce or move with the bumps in the road.  You are looking for a setting the is just above the point where the vehicle transitions from absorbing bumps to moving with/reacting to them.  Some vehicles are stiff enough that your are looking to minimize this as much as possible.  For most vehicles, Bump will end up somewhere between 3.0 and 5.0, but there are exceptions.  Once you have the bump, the rebound should be set to between 1.25 and 2.00 times the bump (i.e. if front bump is 4.0, then front rebound should be between 5.0 and 8.0).  Rebound is also instrumental in fine-tuning the vehicle, but more on that in the Fine-Tuning sections below.</p>
+								<p>Anti-Roll Bars or ARBs, are used to increase sustained lateral grip while cornering.  The values here can vary quite a lot, and are based on several factors.
+								<ol>
+									<li><i>Use a 50/50 front/rear weight bias and 2500 lbs as base values when starting</i></li>
+									<li><b>Drive Type:</b>
+                                        <br>RWD: Set the front to 20.00 and set the rear to 50% of the front value.
+                                        <br>FWD: Set the front to 18.00 and set the rear to 110% of the front value.
+                                        <br>AWD: Set the front to 22.00 and set the rear to 75% of the front value.</li>
+									<li><b>Total Weight:</b>
+                                        <br>For each 100 lbs of total weight above 2500 lbs, increase the front by 0.1 and recalculate the rear value.
+                                        <br>For each 100 lbs of total weight below 2500 lbs, decrease the front by 0.1 and recalculate the rear value</li>
+									<li><b>Weight Bias:</b>
+                                        <br>For each 50 lbs of weight bias difference, increase the heavier end by 0.1 and decrease the lighter end by 0.1.</li>
+									<li><b>Other Factors:</b>
+                                        <br>Tire compound, tire width, ride height, body stiffness, chassis type, etc. all play a part in setting this.  There is no easy way to quantify the subtle adjustments, so this needs to be handled during fine-tuning.</li>
+								</ol>
+								</p>
+								
+								<h6>Step 3: Aero, Brakes &amp; Differential</h6>
+								<p>Aero settings will be dependent on several factors like track, class, and personal preference.  The best place to start is to set to minimum and adjust during fine-tuning.</p>
+								<p>Brakes are where the most driver preference exist.  Ultimately you want the front and rear brakes to lock up together under hard braking.</p>
+								<p>for Differential, there will quite a few factors like drive type, weight balance, engine power/torque, and grip at the drive wheels.  The best things to have are starting ranges for each drive type, and then adjust the values when fine-tuning.  The biggest thing to remember is, in Forza, the smaller gap between rear Acceleration and Deceleration equal more stability.  The rule of thumb is to keep gap between rear Acceleration and Deceleration between 0 to 20 percentage points, and to keep front Deceleration at 0% most of the time..
+								<br>Here are some suggested base values:
+								<ul>
+									<li><b>RWD</b>
+									<br>Acc = 75%
+									<br>Dec = 70%</li>
+									<li><b>FWD</b>
+									<br>Acc = 50%
+									<br>Dec. = 0%</li>
+									<li><b>AWD</b>
+									<br>Acc = 60% front &amp; 85% rear
+									<br>Dec = 0% front &amp; 80% rear
+									<br>Cen = 75% (adjust depending on width of rear tires)</li>
+								</ul></p>
+								
+								<h6>Step 4: Gearbox</h6>
+								<p>Use the stock setting and adjust the final drive to get the best gearing.  Play with settings here to find  the best values for each vehicle you tune.</p>
+								
+								<h6>Step 5: Test Driving &amp; Fine-Tuning</h6>
+								<p>Choose the right test track!  If the build is a grip/momentum build, then choose a grip/momentum track for testing.  Testing a grip build on a speed/power track will not yield the best fine-tuning results.  Make use you make a note of the general lap times you run in each class or division so you can compare different builds too.</p>
+								<p><b><i>Here are some of the better test tracks:</i></b>
+								<ul>
+									<li><strong>Suzuka Full:</strong> this track has just about everything needed to do first and second pass fine-tuning.  If it drives well on this track, it should do well everywhere.</li>
+									<li><strong>VIR Grand East/West:</strong> these two tracks are like running a mini Nürburgring Nordschleife. There's a mix of everything here, so they are good for testing all build types.</li>
+									<li><strong>Sonoma Full:</strong> this track is a great for testing grip builds.</li>
+									<li><strong>Monza Full:</strong> this track is great for testing speed builds.</li>
+									<li><strong>Rio Full:</strong> this track (and the mountain track) is great for testing suspensions for rough surfaces and control.</li>
+								</ul>
+								One of the best methods to really study the vehicle numbers when fine tuning is running a 3-lap race in Free Play and then watching the replay.  After the initial fine-tuning pass using the replay, you can just fine-tune on the fly while test-driving in Free Play.</p>
+							</div>
+							<p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+                <!-- =========== -->
+			</div>
+		</div>
+	</div>
+	<div class="bs-docs-section">
+        <a name="finetune"></a>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-warning">
+						<div class="panel-body">
+							<h4>Fine-Tuning a Vehicle</h4>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+                <!-- =========== -->
+                <!-- Column -->
+                <!-- =========== -->
+				<div class="col-lg-6">
+					<div class="bs-component">
+						<div class="panel panel-warning">
+							<div class="panel-body">
+								<h5>Fine-Tuning: Understeer</h5>
+                                <p><i><b>Understeer:</b> the car does not turn enough and leaves the road</i></p>
+								<p><i>(the items below are ranked in order of effectiveness)</i></p>
+
+								<h6>Understeer on Corner Entry</h6>
+								<p><font color="white">...at Higher Speed</font>
+								<ol>
+									<li>Lower front ride height</li>
+									<li>Decrease rear rebound</li>
+									<li>Increase front aero (if available)</li>
+								</ol></p>
+								<p><font color="white">...at Lower Speed</font>
+								<ol>
+									<li>Increase front toe-out (positive "+" toe in Forza)</li>
+									<li>Increase caster angle</li>
+									<li>Lower front ride height</li>
+									<li>Decrease rear rebound</li>
+								</ol><br></p>
+								
+								<h6>Understeer Mid-Corner</h6>
+								<p><font color="white"><i>* Does the Front suspension bottom out?</i></font>
+								<br><b><i>** YES the front does bottom out.</i></b>
+								<ol>
+									<li>Raise front Ride Height</li>
+									<li>Increase front spring rate</li>
+									<li>Increase front bump (compression) damping</li>
+								</ol><br>
+                                <font color="white"><i>* NO it does not bottom out. <b>Is there Excessive Roll?</b></i></font>
+								<br><b><i>** YES there is excessive roll.</i></b>
+								<ol>
+									<li>Stiffen front anti-roll bar (ARB)</li>
+									<li>Increase front bump (compression) damping</li>
+									<li>Increase front spring rate</li>
+									<li>Reduce caster angle</li>
+								</ol>
+								<b><i>** NO there is NOT excessive roll.</i></b>
+								<ol>
+									<li>Soften front spring rate</li>
+									<li>Increase front rebound damping</li>
+									<li>Lower front ride height</li>
+									<li>Soften front anti-roll bar (ARB)</li>
+									<li>Reduce front bump (compression) damping</li>
+									<li>Increase front aero (if available)</li>
+									<li>Increase front camber negative "-" angle</li>
+									<li>Reduce caster angle</li>
+								</ol><br></p>
+								
+								<h6>Understeer on Corner Exit</h6>
+								<ol>
+									<li>Increase front rebound damping</li>
+									<li>Reduce caster angle</li>
+									<li>Increase front aero (if available)</li>
+								</ol>
+							</div>
+							<p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+                <!-- =========== -->
+                <!-- Column -->
+                <!-- =========== -->
+				<div class="col-lg-6">
+					<div class="bs-component">
+						<div class="panel panel-warning">
+							<div class="panel-body">
+								<h5>Fine-Tuning: Oversteer</h5>
+                                <p><i><b>Oversteer:</b> the car turns more sharply than intended and could get into a spin</i></p>
+								<p><i>(the items below are ranked in order of effectiveness)</i></p>
+								
+								<h6>Oversteer on Corner Entry</h6>
+								<p><font color="white"><i>* Does it Oversteer while Braking?</i></font></li>
+								<br><b><i>** YES it does oversteer while brakeing</i></b>
+								<ol>
+									<li>Increase front brake balance (%) percentage</li>
+									<li>Increase rear differential deceleration (%) percentage</li>
+									<li>Increase rear rebound damping</li>
+									<li>Reduce caster angle</li>
+								</ol>
+								<b><i>** NO it does NOT oversteer while braking</i></b>
+								<ol>
+									<li>Increase rear differential deceleration (%) percentage</li>
+									<li>Increase rear aero (if available)</li>
+									<li>Reduce caster angle</li>
+								</ol><br></p>
+								
+								<h6>Oversteer Mid-Corner</h6>
+								<p><font color="white">...at Higher Speed</font>
+								<ol>
+									<li>Increase rear rebound damping</li>
+									<li>Decrease rear differential acceleration (%) percentage</li>
+									<li>Increase rear aero (if available)</li>
+								</ol><br></p>
+								<p><font color="white">...at Med-Low Speed</font>
+								<br><font color="white"><i>* Does the Rear suspension bottom out?</i></font>
+								<br><b><i>** YES</i></b>
+								<ol>
+									<li>Raise rear ride height</li>
+									<li>Increase rear spring rate</li>
+									<li>Increase rear bump (compression) damping</li>
+								</ol><br>
+                                <font color="white"><i>* NO it does not bottom out. <b>Is there Excessive Roll?</b></i></font>
+								<br><b><i>** YES it does roll excessively</i></b>
+								<ol>
+									<li>Stiffen rear anti-roll bar (ARB)</li>
+									<li>Increase rear bump (compression) damping</li>
+									<li>Increase rear spring rate</li>
+								</ol>
+								<b><i>** NO it does NOT roll excessively</i></b>
+								<ol>
+									<li>Soften rear spring rate</li>
+									<li>Soften rear anti-roll bar (ARB)</li>
+									<li>Lower rear ride height</li>
+									<li>Increase rear bump (compression) damping</li>
+									<li>Decrease rear rebound damping</li>
+									<li>Increase rear aero (if available)</li>
+									<li>Increase front camber negative "-" angle</li>
+									<li>Increase rear toe-in (negative "-" toe in Forza)</li>
+								</ol><br></p>
+								
+								<h6>Oversteer on Corner Exit</h6>
+								<ol>
+									<li>Decrease rear differential acceleration (%) percentage</li>
+									<li>Lower rear ride height</li>
+									<li>Increase rear toe-in (negative "-" toe in Forza)</li>
+									<li>Increase rear aero (if available)</li>
+								</ol>
+							</div>
+							<p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+                <!-- =========== -->
+			</div>
+		</div>
+	</div>
+    <!-- =========== -->
+    <!-- =========== -->
+
+
+    <!-- =========== -->
+    <!-- UPGRADE GUIDE -->
+    <!-- =========== -->
+	<div class="bs-docs-section">
+        <a name="fm7help"></a>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="bs-component">
+					<div class="panel panel-primary">
+						<div class="panel-body">
+                            <h4>FM7 In-Game Tuning Help Text</h4>
+                            <p><i><Strong>NOTE:</Strong> The information below is pretty much word-for-word, with a few formatting/consolidation changes, from the Forza Motorsport 7 In-game Help Text!  This information assists in understanding the impact of each tunable componemt on the vehicle, and what whappens when each component is adjusted.</i></p>
+						</div>
+						<p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+					</div>
+				</div>
+                <!-- =========== -->
+                <!-- Column -->
+				<div class="col-lg-6">
+					<div class="bs-component">
+                    <a name="tires"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+ 							<h5>Tires</h5>
+                                <p>All of a car’s handling, acceleration, and braking must travel through the tires to reach the road.  Tire pressure is an effective way to adjust peak grip, responsiveness, and wear.  Test the pressure changes in small increments, because 1 or 2 PSI can make a big difference in grip.</p>
+                                <p>Excessively high or low pressures can adversely affect the contact area of the tire with the road and overall friction of the tires.  Low tire pressure reduces overall responsiveness while high tire pressure can result in skittish handling.</p>
+                                <p>It’s best to fine-tune tire pressures after a few laps, since tires will heat up during the race making the air inside expand, increasing pressure.</p>
+                                <p>Front-to-rear balance is important, too.  Heavier braking puts more heat and pressure in the front tires. Try to balance for each.</p>
+							</div>
+							<p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="gears"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Gearing</h5>
+                                <ul>
+                                    <li><i><b>Final Drive Ratio Can Be Adjusted with Sport or Race Transmission</b></i></li>
+                                    <li><i><b>Gear Ratios Can Be Adjusted With A Race Transmission Upgrade.</b></i></li>
+                                </ul>
+                                <h6>Final Drive</h6>
+                                <p>The Final Drive is the last multiplier or torque before it reaches the wheels.  As such, it has an effect in every gear.</p>
+                                <p>Adjusting the Final Drive ratio impacts acceleration and top speed.  A higher ratio provides better acceleration while a lower ratio provides better top speed.</p>
+                                <p>It’s best to choose the ratio where the car reaches its top speed in it’s highest gear, near redline.  This provides maximum acceleration while still allowing the car to reach top speed.</p>
+                                <h6>Gear Ratios</h6>
+                                <p>Adjusting individual gear ratios impacts acceleration and top speed. A higher ratio provides better acceleration while a lower ratio provides better speed.</p>
+                                <p>The difference between each ratio changes how far the engine’s RPM will drop when shifting.  Adjust the ratios to keep the engine at peak power as much as possible.  This usually means keeping the ratios close together, but not so close together, but not so close that the car can’t accelerate off the line or achieve top speed.</p>
+                            </div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="alignment"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Alignment</h5>
+                                <ul>
+                                    <li><i><b>Alignment Can Be Adjusted With A Race Suspension Upgrade</b></i></li>
+                                </ul>
+                                <h6>Camber</h6>
+                                <p>Camber refers to the angle of the tire relative to the ground.  Adjusting the camber impacts grip in a balance between cornering and a straight line.</p>
+                                <p>As a car corners, the area of the tire contacting the ground is distorted. By adjusting  camber, drivers can correct this distortion and improve cornering.  However, peak braking and acceleration occur at zero camber, with the tire straight up.</p>
+                                <p>Start with about one degree of negative camber (-1.0) front and rear, then tune from there for peak values.</p>
+                                <p>Remember, camber changes dynamically during suspension travel and every car is different.</p>
+                                <h6>Toe</h6>
+                                <p>Adjust toe (the inward or outward angle of the wheels) to sharpen turn-in response (the transition between driving and straight ahead and turning).</p>
+                                <ul>
+                                    <li>Toe-in brings the fronts of the tires closer together than the backs.  This increases stability, but reduces turn-in.</li>
+                                    <li>Toe-out brings the backs of the tires closer together than the fronts.  This increases turn-in response, but decreases stability.</li>
+                                </ul>
+                                <p>Avoid extremes, because excessive toe-in or toe-out can wear tires quickly.</p>
+                                <h6>Caster</h6>
+                                <p>Caster refers to the angle of the steering axis from the front to the back.</p>
+                                <p>Increasing positive caster pushes the top of steering axis rearward, increasing camber as the wheels are turned. This  allows for less front camber, keeping the tires perpendicular to the road when traveling in a straight line, which is optimal for braking.</p>
+                                <p>Too much positive caster will create an undesirable amount of camber while turning, resulting in unpredictable handling.</p>
+							</div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="arb"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Anti-Roll Bars (ARB)</h5>
+                                <ul>
+                                    <li><i><b>Anti-Roll Bars Can Be Tuned With Race Anti-Roll Bar Upgrades (Front/Rear)</b></i></li>
+                                </ul>
+                                <p>Anti-Roll Bars (also called anti-sway bars or ARB) provide extra roll stiffness when cornering by tying the left and right suspension together.  This allows control of body roll without affecting load transfer under braking and acceleration.</p>
+                                <h6>Front</h6>
+                                <ul>
+                                    <li>Decreasing front ARB stiffness generally reduces understeer</li>
+                                    <li>Increasing front ARB stiffness increases understeer.</li>
+                                </ul>
+                                <p>Front ARB tuning is most effective at turn entry when the front of the car is loaded, as it is in braking.</p>
+                                <h6>Rear</h6>
+                                <ul>
+                                    <li>Decreasing rear ARB stiffness generally reduces oversteer.</li>
+                                    <li>Increasing rear ARB stiffness increases oversteer</li>
+                                </ul>
+                            </div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="springs"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Springs & Ride Height</h5>
+                                <ul>
+                                    <li><i><b>Spring Stiffness And Ride Height Can Be Adjusted With A Race Suspension Upgrade</b></i></li>
+                                </ul>
+                                <h6>Springs</h6>
+                                <p>Spring stiffness controls how the car’s weight is transferred under acceleration, braking, and cornering.</p>
+                                <p><font color="white">Front</font></p>
+                                <ul>
+                                    <li>Softening the front springs in relation to the rear increases front grip and reduces understeer, but too much can cause the car to bottom out under heavy braking or make the car unstable in transitions from left to right.</li>
+                                    <li>Increasing spring stiffness too much can make the car unstable over rough surfaces and curbing.</li>
+                                </ul>
+                                <p><font color="white">Rear</font></p>
+                                <ul>
+                                    <li>Softening the rear springs in relation to the front increases rear grip and reduces oversteer, but too much can cause the car to bottom out under heavy acceleration or make the car unstable in transitions from left to right.</li>
+                                    <li>Increasing spring stiffness too much can make the car unstable over rough surfaces and curbing.</li>
+                                </ul>
+                                <h6>Ride Height</h6>
+                                <p>Ride height determines the car’s ground clearance and center of gravity.</p>
+                                <p>Lowering ride height lowers the center of gravity, which improves cornering. However, lowering it too far can cause bottoming out and sudden loss of control.  Generally, drivers should lower their ride height as much as possible without bottoming out.</p>
+                                <ul>
+                                    <li>Front: Raising the front ride height may help with heavy braking.</li>
+                                    <li>Rear: Raising the rear ride height may help with rear weight transfer during heavy acceleration.</li>
+                                </ul>
+							</div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+    			<!-- =========== -->
+                <!-- Column -->
+				<div class="col-lg-6">
+					<div class="bs-component">
+                    <a name="damping"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Damping</h5>
+                                <ul>
+                                    <li><i><b>Rebound And Bump Damping Can Be Adjusted With Race Suspension Upgrade</b></i></li>
+                                </ul>
+                                <h6>Rebound Stiffness</h6>
+                                <p>Rebound damping controls how quickly the car’s suspension expands when the wheel moves away from the car, as the inside wheels would during a turn or the rear wheels would during braking.  It determines how quickly load is transferred in transitions during turning, braking, and acceleration.</p>
+                                <p>The best practice is to set the bump-damping stiffness first, then move to rebound  damping.  Lower the car’s rebound damping setting until the car transitions harshly through tight chicanes.  Then slowly raise it until these transient movements smooth out.</p>
+                                <ul>
+                                    <li>If the front rebound damping is set too high, the front of car will become skittish and understeer when quickly changing direction.</li>
+                                    <li>If the rear rebound is set too high, the rear of the car will become skittish and oversteer when quickly changing direction.</li>
+                                </ul>
+                                <p>Drivers can also use rebound damping to aid in straight line grip.</p>
+                                <ul>
+                                    <li>Example: lowering front rebound damping speed will transfer weight to the rear wheels during acceleration.</li>
+                                    <li>Example: lowering rear rebound damping speed will transfer weight to the front wheels during braking.</li>
+                                </ul>
+                                <p>Experiment with different damping stiffness for the front and rear to find peak grip.</p>
+                                <h6>Bump Stiffness</h6>
+                                <p>Bump damping controls how quickly a car’s suspension compresses when the wheel moves towards the car, as it would when going over a bump.  It controls the movement of the unsprung mass and keeps the tire in contact with the ground.</p>
+                                <p>Start with a low setting for both bump and rebound damping then slowly increase bump damping to smooth tire contact with the ground across bumps, curbs, and harsh transitions.  Increasing front/rear bump damping too high will cause the tire to skitter across bumps, resulting in a loss of grip.</p>
+                                <p>Once bump damping is set, move to rebound damping.</p>
+                            </div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="aero"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Aero</h5>
+                                <ul>
+                                    <li><i><b>Front And Rear Aero Can Be Adjusted With A Race Front Bumper Upgrade</b></i></li>
+                                </ul>
+                                <p>Air flowing over a car creates lift, which reduces grip and impairs handling.</p>
+                                <p>Increasing downforce will press the tires onto the road, improving handling while heating the tires more quickly.  However, increasing downforce increases drag, which reduces speed.</p>
+                                <p>Carefully adjust downforce to balance the handling of the car at high speeds.</p>
+                                <ul>
+                                    <li>Excessive front downforce can cause oversteer at high speeds.</li>
+                                    <li>Excessive rear downforce can cause understeer at high speeds.</li>
+                                </ul>
+ 							</div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="brake"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Brake</h5>
+                                <ul>
+                                    <li><i><b>Brake Balance And Force Can Be Tuned With A Race Brake Upgrade</b></i></li>
+                                </ul>
+                                <h6>Balance</h6>
+                                <p>A car’s level of grip and the way it handles weight transfer under acceleration or deceleration impacts its brake balance.  As drivers upgrade and tune their cars for better performance, they will probably need to adjust brake balance to maximize brake performance.</p>
+                                <p>By controlling the relative distribution of hydraulic pressure between the front and rear brakes, brake balance impacts which tires lock up first under heavy braking.  This impacts braking distance and understeer/oversteer balance during trail braking (braking while turning in).</p>
+                                <ul>
+                                    <li>Adjusting brake balance rearward increases oversteer under braking at the expense of stability.</li>
+                                    <li>Adjusting the brake forward increases understeer and improves stability, but can lead to excessive understeer when braking.</li>
+                                </ul>
+                                <p>Avoid extremes, which can increase braking distance and cause instability.</p>
+                                <h6>Force</h6>
+                                <p>Adjust overall brake pressure so the tires will lock under hard braking, but won’t lock prematurely with just a small amount of brake application.</p>
+                                <ul>
+                                    <li>Reducing total brake pressure increases the amount of pedal travel required to lock the tires.  If it is reduced too much, the tires won’t lock at all.</li>
+                                    <li>Increase total brake pressure if the tires are not locking under hard braking.  Don’t overdo it or the tires will lock too easily, sending the car out of control.</li>
+                                </ul>
+                            </div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+					<div class="bs-component">
+                    <a name="diff"></a>
+						<div class="panel panel-primary">
+							<div class="panel-body">
+                                <h5>Differential</h5>
+                                <ul>
+                                    <li><i><b>Acceleration Setting Can Be Adjusted With A Sport Or Race Differential Upgrade.</b></i></li>
+                                    <li><i><b>Deceleration & Balance Settings Can Be Adjusted With Race Differential Upgrade.</b></i></li>
+                                </ul>
+                                <p>The differential allows the tires on each side of the car to turn at different rates, since the inside tire travels a shorter distance around a turn than the outside tire.  A limited-slip differential limits this difference in speed by equalizing the torque going to each wheel, providing maximum traction under acceleration and/or deceleration.</p>
+                                <h6>Acceleration</h6>
+                                <p>Adjusts the amount of torque that will transfer to a wheel first.</p>
+                                <p>The Acceleration setting adjusts how much torque can be applied from one side of the car to the other when accelerating.</p>
+                                <ul>
+                                    <li>Increasing the Acceleration setting makes the differential tighten harder and more quickly under acceleration.  On rear differentials, increasing the Acceleration setting can increase oversteer in rear and all-wheel-drive cars.  For high-powered vehicles, this increase is necessary to maintain adequate grip, but excessively quick differential locking can impair handling.</li>
+                                    <li>Reducing the Acceleration setting makes the differential lock more slowly.  On front differentials, reducing the Acceleration setting can reduce understeer in front or all-wheel-drive vehicles.</li>
+                                </ul>
+                                <h6>Deceleration</h6>
+                                <p>Adjusts the amount of torque transferred from side to side when the wheels slips.</p>
+                                <p>The Deceleration setting adjusts how much torque can be applied from one side of the car to the other when the engine isn’t under load.</p>
+                                <p>Increasing the Deceleration setting makes the differential tighten harder and more quickly under deceleration, which in small amounts can stabilize the car.</p>
+                                <ul>
+                                    <li>On rear and all-wheel-drive cars, excessive rear differential locking can cause off-throttle oversteer.</li>
+                                    <li>On front-wheel-drive cars, excessive front differential locking can cause understeer.</li>
+                                </ul>
+                                <h6>Center Balance</h6>
+                                <p>A center differential controls the relative distribution of drive torque between the front and rear axles in all-wheel-drive cars.</p>
+                                <ul>
+                                    <li>Increasing torque to the rear makes the car respond better to throttle oversteer, akin to a rear-wheel-drive car.</li>
+                                    <li>Increasing torque to the front reduces throttle oversteer, more like a front-wheel-drive car, but the car is stabilized.</li>
+                                </ul>
+							</div>
+                            <p class="text-center"><a href="#index">^^ Return to Top ^^</a></p>
+						</div>
+					</div>
+				</div>
+    			<!-- =========== -->
+			</div>
+		</div>
+	</div>
+    <!-- =========== -->
+    <!-- =========== -->
+
+
+</div>
+</body>
+</html>
