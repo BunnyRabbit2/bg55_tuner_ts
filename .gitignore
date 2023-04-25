@@ -159,3 +159,5 @@ sketch
 build
 
 build/**/*
+
+private
