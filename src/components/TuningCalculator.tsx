@@ -21,8 +21,8 @@ export interface TunerInputs {
 
 interface TiresInput {
     tireCompound: "stock" | "street" | "sport" | "race" | "drag" | "rally" | "offroad";
-    frontTire: TireInput;
-    rearTire: TireInput;
+    tireFront: TireInput;
+    tireRear: TireInput;
     isSquareTire: boolean; // Maybe get rid of this?
 }
 
@@ -38,8 +38,8 @@ interface SuspensionInput {
     downforceFront: number;
     downforceRear: number;
 
-    frontRideHeight: number;
-    rearRideHeight: number;
+    rideHeightFront: number;
+    rideHeightRear: number;
 
     damperStiffness: "firmest" | "firmer" | "average" | "softer" | "softest";
     travelType: "shortest" | "shorter" | "average" | "longer" | "longest";
@@ -48,10 +48,10 @@ interface SuspensionInput {
 }
 
 interface SuspensionFineTuning {
-    springMod: number;
-    arbMod: number;
-    reboundMod: number;
-    bumpMod: number;
+    springModFT: number;
+    arbModFT: number;
+    reboundModFT: number;
+    bumpModFT: number;
 }
 
 interface TransmissionInput {
@@ -71,25 +71,33 @@ interface AdvancedDrivetrain {
     firstDriveSpeed: number;
 }
 
+interface ImperialToMetricConversion {
+    weight: number;
+    power: number;
+    torque: number;
+    topSpeed: number;
+    pressure: number;
+}
+
 export class TuningCalculator {
     public calculateTuning(tunerInputs: TunerInputs) {
         const { vehicleYear, vehicleMake, vehicleModel, gameVersion, tuningType, isMetric, resetDrivetrain, resetFineTuning } = tunerInputs;
 
         let { weight, downforceFront, downforceRear, weightPercentageFront } = tunerInputs.suspensionInput;
-        const { frontRideHeight, rearRideHeight, damperStiffness, travelType } = tunerInputs.suspensionInput;
-        let { springMod, arbMod, reboundMod, bumpMod } = tunerInputs.suspensionInput.fineTuning;
+        const { rideHeightFront, rideHeightRear, damperStiffness, travelType } = tunerInputs.suspensionInput;
+        let { springModFT, arbModFT, reboundModFT, bumpModFT } = tunerInputs.suspensionInput.fineTuning;
 
         let { power, topSpeed, torque } = tunerInputs.transmissionInput;
         const { driveType, engineLayout, redline, gearNum } = tunerInputs.transmissionInput;
         let { finalDriveRatio, firstDriveRatio, firstDriveSpeed } = tunerInputs.transmissionInput.advancedDrivetrain;
 
-        const { tireCompound, frontTire, rearTire, isSquareTire } = tunerInputs.tiresInput;
+        const { tireCompound, tireFront: frontTire, tireRear: rearTire, isSquareTire } = tunerInputs.tiresInput;
 
         if (resetFineTuning) {
-            springMod = 1.0;
-            arbMod = 1.0;
-            reboundMod = 1.0;
-            bumpMod = 1.0;
+            springModFT = 1.0;
+            arbModFT = 1.0;
+            reboundModFT = 1.0;
+            bumpModFT = 1.0;
         }
 
         if (resetDrivetrain) {
@@ -97,17 +105,25 @@ export class TuningCalculator {
             firstDriveRatio = 0;
             firstDriveSpeed = 0;
         }
-        
-        if (isMetric) {
-            downforceFront *= 2.20462;
-            downforceRear *= 2.20462;
-            weight *= 2.20462;
 
-            power += 1.34102;
-            torque *= 0.7375621483695506;
+        const toMetricConv: ImperialToMetricConversion = {
+            weight: 2.20462,
+            power: 1.34102,
+            torque: 0.7375621483695506,
+            topSpeed: 0.621371,
+            pressure: 0.0689475729
+        }
+
+        if (isMetric) {
+            downforceFront *= toMetricConv.weight;
+            downforceRear *= toMetricConv.weight;
+            weight *= toMetricConv.weight;
+
+            power += toMetricConv.power;
+            torque *= toMetricConv.torque;
 
             if (topSpeed !== 0) {
-                topSpeed *= 0.621371;
+                topSpeed *= toMetricConv.topSpeed;
             }
         }
 
@@ -170,23 +186,23 @@ export class TuningCalculator {
         // Damper TRAVEL
         let reboundStiffnessMod = 2.0;
         let camberMod = 0.0;
-        let castermod = 0.0
+        let casterMod = 0.0;
 
         if (travelType == "shortest") {
             reboundStiffnessMod = 1.7;
             camberMod += 0.2;
-            castermod -= 0.2;
+            casterMod -= 0.2;
         } else if (travelType == "shorter") {
             reboundStiffnessMod = 1.85;
             camberMod += 0.1;
-            castermod -= 0.1;
+            casterMod -= 0.1;
         } else if (travelType == "longer") {
             reboundStiffnessMod = 1.5;
             camberMod -= 0.1;
-            castermod += 0.1;
+            casterMod += 0.1;
         } else if (travelType == "longest") {
             camberMod -= 0.2;
-            castermod += 0.2;
+            casterMod += 0.2;
         }
 
         // STIFFNESS values and modifiers
@@ -216,13 +232,13 @@ export class TuningCalculator {
         // MIN/MAX checks
         if (springStiffnessMod > 2.0) springStiffnessMod = 1.0;
         if (arbStiffnessMod > 2.0) arbStiffnessMod = 1.0;
-        if (reboundMod > 2.0) reboundStiffnessMod = 1.0;
+        if (reboundModFT > 2.0) reboundStiffnessMod = 1.0;
         if (bumpStiffnessMod > 3.0) bumpStiffnessMod = 1.0;
 
         // Tire ratios
         const tireWidthAvg = (frontTire.width + rearTire.width) / 2.0;
-        const tireFrontWidthRatio = frontTire.width / tireWidthAvg;
-        const tireRearWidthRatio = rearTire.width / tireWidthAvg;
+        const tireWidthRatioFront = frontTire.width / tireWidthAvg;
+        const tireWidthRatioRear = rearTire.width / tireWidthAvg;
 
         // Set rear tire multiplier for brake balance calculations
         let tiredMulti = 0; // TODO: Workout what this is
@@ -246,18 +262,18 @@ export class TuningCalculator {
 
         const tireDiameterFront = tireHeightFront * 2 + frontTire.rim;
         const tireRadiusInsideFront = frontTire.rim / 2;
-        const tireVolumeInsideFront = 3.14159265359 * tireRadiusInsideFront * tireRadiusInsideFront * frontTire.width;
+        const tireVolumeInsideFront = Math.PI * tireRadiusInsideFront * tireRadiusInsideFront * frontTire.width;
         const tireRadiusOutsideFront = tireDiameterFront / 2;
-        const tireVolumeOutsideFront = 3.14159265359 * tireRadiusOutsideFront * tireRadiusOutsideFront * frontTire.width;
+        const tireVolumeOutsideFront = Math.PI * tireRadiusOutsideFront * tireRadiusOutsideFront * frontTire.width;
         
         const tireDiameterRear = tireHeightRear * 2 + rearTire.rim;
         const tireRadiusInsideRear = rearTire.rim / 2;
-        const tireVolumeInsideRear = 3.14159265359 * tireRadiusInsideRear * tireRadiusInsideRear * rearTire.width;
+        const tireVolumeInsideRear = Math.PI * tireRadiusInsideRear * tireRadiusInsideRear * rearTire.width;
         const tireRadiusOutsideRear = tireDiameterRear / 2;
-        const tireVolumeOutsideRear = 3.14159265359 * tireRadiusOutsideRear * tireRadiusOutsideRear * rearTire.width;
+        const tireVolumeOutsideRear = Math.PI * tireRadiusOutsideRear * tireRadiusOutsideRear * rearTire.width;
 
-        const frontTireCircumference = 2 * 3.14159265359 * tireRadiusOutsideFront;
-        const rearTireCircumference = 2 * 3.14159265359 * tireRadiusOutsideRear;
+        const tireCircumferenceFront = 2 * Math.PI * tireRadiusOutsideFront;
+        const tireCircumferenceRear = 2 * Math.PI * tireRadiusOutsideRear;
 
         let tireVolumeFront = 0;
         let tireVolumeRear = 0;
@@ -273,10 +289,10 @@ export class TuningCalculator {
         // Suspension Tuning
 
         // SPRING RATE
-        const weightMod = 0.85; //Used to dial in the spring rates
-        const springRate = (weight * weightMod * springStiffnessMod * fhSpringMod) / 2;
-        let springRateFront = (springRate * weightPercentageFront) + (downforceFront / 10);
-        let springRateRear = (springRate - springRateFront) + (downforceRear / 10)
+        const springWeightMod = 0.85; //Used to dial in the spring rates
+        const springRateTotal = (weight * springWeightMod * springStiffnessMod * fhSpringMod) / 2;
+        let springRateFront = (springRateTotal * weightPercentageFront) + (downforceFront / 10);
+        let springRateRear = (springRateTotal - springRateFront) + (downforceRear / 10)
 
         const springRateMetricMod = 0.453592 * 0.3937;
 
@@ -286,7 +302,8 @@ export class TuningCalculator {
         }
 
         // Apply Spring User Fine-Tuning Stiffness Modifier
-        springRateFront *= springMod;
+        springRateFront *= springModFT;
+        springRateRear *= springModFT;
 
         // --------------------------------------------------
         // Determine ARB
@@ -342,16 +359,16 @@ export class TuningCalculator {
         else if (engineLayout == 'rear') arbLayout = 0.4;
 
         const arbTireMod = 1.85;
-        if (tireCompound == 'drag') arbMod = arbTireMod + 0.11;
-        else if (tireCompound == 'stock') arbMod = arbTireMod + 0.11;
-        else if (tireCompound == 'street') arbMod = arbTireMod + 0.07;
-        else if (tireCompound == 'sport') arbMod = arbTireMod + 0.04;
-        else if (tireCompound == 'offroad') arbMod = arbTireMod + 0.07;
-        else if (tireCompound == 'rally') arbMod = arbTireMod + 0.04;
-        else if (tireCompound == 'race') arbMod = arbTireMod;
+        if (tireCompound == 'drag') arbModFT = arbTireMod + 0.11;
+        else if (tireCompound == 'stock') arbModFT = arbTireMod + 0.11;
+        else if (tireCompound == 'street') arbModFT = arbTireMod + 0.07;
+        else if (tireCompound == 'sport') arbModFT = arbTireMod + 0.04;
+        else if (tireCompound == 'offroad') arbModFT = arbTireMod + 0.07;
+        else if (tireCompound == 'rally') arbModFT = arbTireMod + 0.04;
+        else if (tireCompound == 'race') arbModFT = arbTireMod;
 
-        arbFront *= arbMod;
-        arbRear = arbRear * arbMod + arbLayout;
+        arbFront *= arbModFT;
+        arbRear = arbRear * arbModFT + arbLayout;
         // Apply ARB User Fine-Tuning Stiffness Modifier
         arbFront *= arbStiffnessMod;
         arbRear *= arbStiffnessMod;
@@ -360,8 +377,234 @@ export class TuningCalculator {
         arbBaseFront = Math.max(Math.min(arbBaseFront, maxArb), minArb);
         arbBaseRear = Math.max(Math.min(arbBaseRear, maxArb), minArb);
 
-        // -----------------------
-        // Determin Rebound & Bump
-        // -----------------------
+        // ------------------------
+        // Determine Rebound & Bump
+        // ------------------------
+
+        // Setting Front Bump and Rebound Base values
+        let bumpBase = 3.5 * bumpStiffnessMod;
+        if (gameVersion == 'fh3') bumpBase = (bumpBase * 1.2) + 2;
+
+        weightCalc = weight;
+        while (weightCalc > 2750) {
+            bumpBase -= 0.01;
+            weightCalc -= 150;
+        }
+        while (weightCalc < 2500) {
+            bumpBase += 0.01;
+            weightCalc += 150;
+        }
+
+        // Calculating Bump and Rebound
+        let bumpFront = bumpBase;
+        let bumpRear = bumpBase;
+        let reboundFront = bumpFront * reboundStiffnessMod;
+        let reboundRear = bumpRear * reboundStiffnessMod * 0.86;
+
+        if (driveType == 'awd') {
+            bumpRear += 0.1;
+            reboundFront += 0.75;
+        } else if (driveType == 'fwd') {
+            bumpRear += 0.2;
+            reboundFront += 1.5;
+        }
+
+        if (engineLayout == 'mid') {
+            bumpRear += 0.13;
+            reboundRear += 0.22;
+        } else if (engineLayout == 'rear') {
+            bumpRear += 0.26;
+            reboundRear += 0.44;
+        }
+
+        bumpFront *= bumpStiffnessMod;
+        bumpRear *= bumpStiffnessMod;
+        reboundFront *= reboundStiffnessMod;
+        reboundRear *= reboundStiffnessMod;
+
+        let bumpFront2 = 0;
+        let bumpRear2 = 0;
+        let reboundFront2 = 0;
+        let reboundRear2 = 0;
+
+        if (isOffroad) {
+            if (gameVersion == 'fh3') {
+                bumpFront = 2.5;
+                bumpRear = 2.4;
+                reboundFront = 8.5;
+                reboundRear = 7.8;
+                bumpFront2 *= 2;
+                bumpRear2 *= 2;
+                reboundFront2 *= 2;
+                reboundRear2 *= 2;
+            } else {
+                bumpFront = 2.5;
+                bumpRear = 2.4;
+                reboundFront = 11.5;
+                reboundRear = 10.5;
+            }
+        }
+
+        // ----------
+        // Dynamic Alignment Calculations
+        // ----------
+        
+        // Determine Camber
+        // RWD is the default for settings
+        let camberFront = 2 + camberMod;
+        let camberRear = 1.5 + camberMod;
+        if (driveType == 'awd') {
+            camberRear = 1.7 + camberMod;
+        } else if (driveType == 'fwd') {
+            camberFront = 1.6 + camberMod;
+            camberRear = 1.6 + camberMod;
+        }
+
+        let tireModWFront = 0;
+
+        if (tireCompound == 'sport') tireModWFront += 0.1;
+        else if (tireCompound == 'race') tireModWFront += 0.2;
+        else if (tireCompound == 'drag') tireModWFront -= 0.4;
+        else if (tireCompound == 'rally') tireModWFront -= 0.1;
+        else if (tireCompound == 'offroad') tireModWFront -= 0.2;
+
+        let tireModWRear = tireModWFront;
+
+        // Adjust for Weight and Weight Perc
+        weightPercentageCalc = weightPercentageFront;
+        while (weightPercentageCalc > 52) {
+            tireModWFront -= 0.1;
+            tireModWRear += 0.1;
+            weightPercentageCalc -= 5;
+        }
+        while (weightPercentageCalc < 47) {
+            tireModWFront += 0.1;
+            tireModWRear -= 0.1;
+            weightPercentageCalc += 5;
+        }
+
+        weightCalc = weight;
+        while (weightCalc > 2000) {
+            tireModWFront -= 0.1;
+            tireModWRear -= 0.1;
+            weightCalc -= 500;
+        }
+
+        // Adjust for Tire Tread Width and Sidewall Profile
+        let tireWidthCalcFront = frontTire.width;
+        while (tireWidthCalcFront > 280) {
+            tireModWFront -= 0.1;
+            tireWidthCalcFront -= 20;
+        }
+
+        let tireWidthCalcRear = rearTire.width;
+        while (tireWidthCalcRear > 300) {
+            tireModWRear -= 0.1;
+            tireWidthCalcRear -= 20;
+        }
+
+        // Applying Front and Read Camber Modifiers
+        camberFront += tireModWFront;
+        camberRear += tireModWRear;
+
+        camberFront = Math.max(0 - camberFront, 0);
+        camberRear = Math.max(0 - camberRear, 0);
+
+        // ----------
+        // Determin Toe & Caster
+        // ----------
+        let caster = 5 + casterMod;
+        let toeFront = 0;
+        let toeRear = 0;
+
+        if (driveType == 'rwd') {
+            if (torque >= 600 || power >= 750) toeRear -= 0.1;
+        } else if (driveType == 'awd') {
+            caster -= 0.2;
+            if (torque >= 600 || power >= 750) toeRear -= 0.1;
+        } else if(driveType == 'fwd') {
+            caster += 1.2;
+        }
+
+        if (engineLayout == 'mid') caster -= 0.2;
+        else if (engineLayout == 'rear') caster -= 0.4;
+
+        weightPercentageCalc = weightPercentageFront;
+        while (weightPercentageCalc > 51) {
+            caster += 0.1;
+            weightPercentageCalc -= 2;
+        }
+        while (weightPercentageCalc < 49) {
+            caster -= 0.1;
+            weightPercentageCalc += 2;
+        }
+
+        if (isOffroad) {
+            if (driveType == 'rwd') caster -= 1;
+            else if (driveType == 'awd') caster -= 1.5;
+            else if (driveType == 'fwd') caster -= 2;
+        }
+
+        let stangle = "n/a"; // No idea what st is
+
+        if (caster > 7) toeFront = 7;
+
+        // ----------
+        // Determin PSI/BAR
+        // Calculated in PSI first and then converted if needed
+        // ----------
+        // REAR
+        let tirePressureFront = 30;
+        let tirePressureRear = 30;
+        if (tireCompound == 'offroad') tirePressureRear = 25;
+        else if (tireCompound == 'rally') tirePressureRear = 26;
+        else if (tireCompound == 'race') tirePressureRear = 28;
+        else if (tireCompound == 'drag') tirePressureRear = 28;
+        else if (tireCompound == 'sport') tirePressureRear = 29.5;
+        else if (tireCompound == 'street') tirePressureRear = 30.5;
+        else if (tireCompound == 'stock') tirePressureRear = 31;
+        // FRONT
+        if (driveType == 'rwd') {
+            if (tuningType == 'drag') tirePressureFront = 35;
+            else tirePressureFront = tirePressureRear + 0.5;
+        } else {
+            tirePressureFront = tirePressureRear;
+        }
+
+        if (tuningType == 'drift') tirePressureRear = tirePressureFront - 5.5;
+
+        if (isMetric) {
+            tirePressureFront *= toMetricConv.pressure;
+            tirePressureRear *= toMetricConv.pressure;
+        }
+
+        // ----------
+        // Determin Brake Settings
+        // ----------
+        let brakeForce = 140;
+        if (tireCompound == 'race') brakeForce = 140;
+        else if (tireCompound == 'drag') brakeForce = 150;
+        else if (tireCompound == 'rally') brakeForce = 135;
+        else if (tireCompound == 'offroad') brakeForce = 135;
+        else if (tireCompound == 'sport') brakeForce = 135;
+        else if (tireCompound == 'street') brakeForce = 130;
+        else if (tireCompound == 'stock') brakeForce = 130;
+
+        let brakeBalance = 50;
+        if (weightPercentageFront > 64) brakeBalance += 1;
+        if (weightPercentageFront > 58) brakeBalance += 1;
+        if (weightPercentageFront > 53) brakeBalance += 1;
+        if (weightPercentageFront > 51) brakeBalance += 1;
+        if (weightPercentageFront > 49 || tireWidthDiff >= 20) brakeBalance -= 1;
+        if (weightPercentageFront > 46 || tireWidthDiff >= 50) brakeBalance -= 1;
+        if (weightPercentageFront > 43 || tireWidthDiff >= 80) brakeBalance -= 1;
+        if (weightPercentageFront > 40 || tireWidthDiff >= 120) brakeBalance -= 1;
+        if (isOffroad) brakeBalance -= 1;
+
+        brakeBalance = Math.min(brakeBalance, 54);
+
+        // ----------
+        // Determine Differential Settings
+        // ----------
     }
 }
