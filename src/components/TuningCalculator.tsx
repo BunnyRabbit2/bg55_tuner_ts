@@ -241,33 +241,127 @@ export class TuningCalculator {
             rearTire.width /= 25.4;
         }
 
-        const frontTireHeight = frontTire.width * (frontTire.aspectRatio / 100);
-        const rearTireHeight = rearTire.width * (rearTire.aspectRatio / 100);
+        const tireHeightFront = frontTire.width * (frontTire.aspectRatio / 100);
+        const tireHeightRear = rearTire.width * (rearTire.aspectRatio / 100);
 
-        const frontTireDiameter = frontTireHeight * 2 + frontTire.rim;
-        const frontTireRadiusInside = frontTire.rim / 2;
-        const frontTireVolumeInside = 3.14159265359 * frontTireRadiusInside * frontTireRadiusInside * frontTire.width;
-        const frontTireRadiusOutside = frontTireDiameter / 2;
-        const frontTireVolumeOutside = 3.14159265359 * frontTireRadiusOutside * frontTireRadiusOutside * frontTire.width;
+        const tireDiameterFront = tireHeightFront * 2 + frontTire.rim;
+        const tireRadiusInsideFront = frontTire.rim / 2;
+        const tireVolumeInsideFront = 3.14159265359 * tireRadiusInsideFront * tireRadiusInsideFront * frontTire.width;
+        const tireRadiusOutsideFront = tireDiameterFront / 2;
+        const tireVolumeOutsideFront = 3.14159265359 * tireRadiusOutsideFront * tireRadiusOutsideFront * frontTire.width;
         
-        const rearTireDiameter = rearTireHeight * 2 + rearTire.rim;
-        const rearTireRadiusInside = rearTire.rim / 2;
-        const rearTireVolumeInside = 3.14159265359 * rearTireRadiusInside * rearTireRadiusInside * rearTire.width;
-        const rearTireRadiusOutside = rearTireDiameter / 2;
-        const rearTireVolumeOutside = 3.14159265359 * rearTireRadiusOutside * rearTireRadiusOutside * rearTire.width;
+        const tireDiameterRear = tireHeightRear * 2 + rearTire.rim;
+        const tireRadiusInsideRear = rearTire.rim / 2;
+        const tireVolumeInsideRear = 3.14159265359 * tireRadiusInsideRear * tireRadiusInsideRear * rearTire.width;
+        const tireRadiusOutsideRear = tireDiameterRear / 2;
+        const tireVolumeOutsideRear = 3.14159265359 * tireRadiusOutsideRear * tireRadiusOutsideRear * rearTire.width;
 
-        const frontTireCircumference = 2 * 3.14159265359 * frontTireRadiusOutside;
-        const rearTireCircumference = 2 * 3.14159265359 * rearTireRadiusOutside;
+        const frontTireCircumference = 2 * 3.14159265359 * tireRadiusOutsideFront;
+        const rearTireCircumference = 2 * 3.14159265359 * tireRadiusOutsideRear;
 
-        let frontTireVolume = 0;
-        let rearTireVolume = 0;
+        let tireVolumeFront = 0;
+        let tireVolumeRear = 0;
 
         if (isMetric) {
-            frontTireVolume = ((frontTireVolumeOutside - frontTireVolumeInside) / 1000) / 1000;
-            rearTireVolume = ((rearTireVolumeOutside - rearTireVolumeInside) / 1000) / 1000;
+            tireVolumeFront = ((tireVolumeOutsideFront - tireVolumeInsideFront) / 1000) / 1000;
+            tireVolumeRear = ((tireVolumeOutsideRear - tireVolumeInsideRear) / 1000) / 1000;
         } else {
-            frontTireVolume = (frontTireVolumeOutside - frontTireVolumeInside) / 1728;
-            rearTireVolume = (rearTireVolumeOutside - rearTireVolumeInside) / 1728;
+            tireVolumeFront = (tireVolumeOutsideFront - tireVolumeInsideFront) / 1728;
+            tireVolumeRear = (tireVolumeOutsideRear - tireVolumeInsideRear) / 1728;
         }
+
+        // Suspension Tuning
+
+        // SPRING RATE
+        const weightMod = 0.85; //Used to dial in the spring rates
+        const springRate = (weight * weightMod * springStiffnessMod * fhSpringMod) / 2;
+        let springRateFront = (springRate * weightPercentageFront) + (downforceFront / 10);
+        let springRateRear = (springRate - springRateFront) + (downforceRear / 10)
+
+        const springRateMetricMod = 0.453592 * 0.3937;
+
+        if (isMetric) {
+            springRateFront *= springRateMetricMod;
+            springRateRear *= springRateMetricMod;
+        }
+
+        // Apply Spring User Fine-Tuning Stiffness Modifier
+        springRateFront *= springMod;
+
+        // --------------------------------------------------
+        // Determine ARB
+        // Intentionally calculated with reveresed weight R/F
+        // --------------------------------------------------
+        // FM3-7 & FH2 ARB Range = 1.0-40.0
+        // FH3 ARB Range = 1.0 to 65.0
+
+        const maxArb = gameVersion == 'fh3' ? 65.0 : 40.0;
+        const minArb = 1.0;
+
+        // Setting front base ARB
+        let arbBaseFront = isOffroad ? weightFront * 0.006 * fhArbMod : 7.0;
+
+        // Adjusting for vehicle weight
+        const arbWeightMod = 0
+        
+        let weightCalc = weight;
+        while (weightCalc > 2750) {
+            arbBaseFront += 0.1;
+            weightCalc -= 100;
+        }
+        while (weightCalc < 2500) {
+            arbBaseFront -= 0.1;
+            weightCalc += 100
+        }
+
+        // Calculate rear ARB
+        let arbBaseRear = arbBaseFront * 0.75; // RWD as default
+        if (driveType == 'awd') arbBaseRear = arbBaseFront * 0.875;
+        if (driveType == 'fwd') arbBaseRear = arbBaseFront * 1.125;
+
+        // Adjusting ARB for weight bias
+        let weightPercentageCalc = weightPercentageFront;
+        if (weightPercentageCalc > 50) {
+            arbBaseFront += 0.27;
+            arbBaseRear -= 0.27;
+            weightPercentageCalc -= 1;
+        }
+        if (weightPercentageCalc < 50) {
+            arbBaseFront -= 0.27;
+            arbBaseRear += 0.27;
+            weightPercentageCalc += 1;
+        }
+
+        // Setting ARBs
+        let arbFront = arbBaseFront * arbStiffnessMod;
+        let arbRear = arbBaseRear * arbStiffnessMod;
+
+        // Setting ARB Modifiers
+        let arbLayout = 0.0
+        if (engineLayout == 'mid') arbLayout = 0.2;
+        else if (engineLayout == 'rear') arbLayout = 0.4;
+
+        const arbTireMod = 1.85;
+        if (tireCompound == 'drag') arbMod = arbTireMod + 0.11;
+        else if (tireCompound == 'stock') arbMod = arbTireMod + 0.11;
+        else if (tireCompound == 'street') arbMod = arbTireMod + 0.07;
+        else if (tireCompound == 'sport') arbMod = arbTireMod + 0.04;
+        else if (tireCompound == 'offroad') arbMod = arbTireMod + 0.07;
+        else if (tireCompound == 'rally') arbMod = arbTireMod + 0.04;
+        else if (tireCompound == 'race') arbMod = arbTireMod;
+
+        arbFront *= arbMod;
+        arbRear = arbRear * arbMod + arbLayout;
+        // Apply ARB User Fine-Tuning Stiffness Modifier
+        arbFront *= arbStiffnessMod;
+        arbRear *= arbStiffnessMod;
+
+        // Checking for Min-Max values
+        arbBaseFront = Math.max(Math.min(arbBaseFront, maxArb), minArb);
+        arbBaseRear = Math.max(Math.min(arbBaseRear, maxArb), minArb);
+
+        // -----------------------
+        // Determin Rebound & Bump
+        // -----------------------
     }
 }
