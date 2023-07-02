@@ -79,6 +79,60 @@ interface ImperialToMetricConversion {
     pressure: number;
 }
 
+export interface TunerOutputs {
+    tirePressureFront: number;
+    tirePressureRear: number;
+    gearRatios: GearRatios;
+    alignment: AlignmentSettings;
+    suspension: SuspensionSettings;
+    brakeBalance: number;
+    brakeForce: number;
+    differential: DifferentialSettings;
+}
+
+interface GearRatios {
+    finalDrive: number;
+    ratio1: number;
+    ratio2: number;
+    ratio3: number;
+    ratio4: number;
+    ratio5: number;
+    ratio6: number;
+    ratio7: number;
+    ratio8: number;
+    ratio9: number;
+    ratio10: number;
+    ratio11: number;
+}
+
+interface AlignmentSettings {
+    camberFront: number;
+    camberRear: number;
+    toeFront: number;
+    toeRear: number;
+    caster: number;
+    steeringAngle: number | 'n/a';
+}
+
+interface SuspensionSettings {
+    arbFront: number;
+    arbRear: number;
+    springFront: number;
+    springRear: number;
+    reboundFront: number;
+    reboundRear: number;
+    bumpFront: number;
+    bumpRear: number;
+}
+
+interface DifferentialSettings {
+    accFront: number;
+    accRear: number;
+    deccFront: number;
+    deccRear: number;
+    centerBalance: number;
+}
+
 export class TuningCalculator {
     public calculateTuning(tunerInputs: TunerInputs) {
         const { vehicleYear, vehicleMake, vehicleModel, gameVersion, tuningType, isMetric, resetDrivetrain, resetFineTuning } = tunerInputs;
@@ -545,7 +599,7 @@ export class TuningCalculator {
             else if (driveType == 'fwd') caster -= 2;
         }
 
-        let stangle = "n/a"; // No idea what st is
+        let steeringAngle = "n/a";
 
         if (caster > 7) toeFront = 7;
 
@@ -606,5 +660,6 @@ export class TuningCalculator {
         // ----------
         // Determine Differential Settings
         // ----------
+
     }
 }
