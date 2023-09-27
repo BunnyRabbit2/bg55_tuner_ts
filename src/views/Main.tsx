@@ -2,15 +2,13 @@ import React from "react";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import EntryForm from "../components/EntryForm";
+import Tuner from "../components/Tuner";
 
 export const Main = () => {
   return (
     <>
       <Navbar />
-      <main>
-        <EntryForm />
-      </main>
+      <Tuner />
       <Footer />
     </>
   );
