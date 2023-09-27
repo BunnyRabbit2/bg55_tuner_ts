@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import EntryForm from "../components/EntryForm";
 
-export default function Main() {
+export const Main = () => {
   return (
     <>
       <Navbar />

@@ -8,8 +8,8 @@ module.exports = {
   },
   daisyui: {
     themes: [
-      "synthwave",
       "cyberpunk",
+      "synthwave",
       "night"
     ],
   },
