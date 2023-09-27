@@ -6,5 +6,16 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  daisyui: {
+    themes: [
+      "synthwave",
+      "cyberpunk",
+      "night"
+    ],
+  },
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
+    require("daisyui")
+  ],
 }
