@@ -1,11 +1,17 @@
+export const tuningTypes = [ "circuit" , "drag" , "drift" , "rally" , "offroad" , "buggy" ];
+export const gameVersions = ["fm5", "fm6", "fm7", "fh2", "fh3", "fh4"];
+export const tireCompounds = ["stock", "street", "sport", "race", "drag", "rally", "offroad"];
+export const damperStiffnesses = ["firmest", "firmer", "average", "softer", "softest"];
+export const travelTypes = ["shortest", "shorter", "average", "longer", "longest"];
+export const driveTypes = ["fwd", "rwd", "awd"];
+export const engineLayouts = ["front", "mid", "rear"];
+
 export interface TunerInputs {
-    vehicleYear: string;
-    vehicleMake: string;
-    vehicleModel: string;
+    vehicleInfo: VehicleInfo;
 
-    gameVersion: "fm5" | "fm6" | "fm7" | "fh2" | "fh3" | "fh4"; // Needs setting correctly
+    gameVersion: typeof gameVersions[number];
 
-    tuningType: "circuit" | "drag" | "drift" | "rally" | "offroad" | "buggy";
+    tuningType: typeof tuningTypes[number];
 
     isMetric: boolean;
 
@@ -19,8 +25,14 @@ export interface TunerInputs {
     transmissionInput: TransmissionInput;
 }
 
+interface VehicleInfo {
+    vehicleYear: string;
+    vehicleMake: string;
+    vehicleModel: string;
+}
+
 interface TiresInput {
-    tireCompound: "stock" | "street" | "sport" | "race" | "drag" | "rally" | "offroad";
+    tireCompound: typeof tireCompounds[number];
     tireFront: TireInput;
     tireRear: TireInput;
     isSquareTire: boolean; // Maybe get rid of this?
@@ -41,8 +53,8 @@ interface SuspensionInput {
     rideHeightFront: number;
     rideHeightRear: number;
 
-    damperStiffness: "firmest" | "firmer" | "average" | "softer" | "softest";
-    travelType: "shortest" | "shorter" | "average" | "longer" | "longest";
+    damperStiffness: typeof damperStiffnesses[number];
+    travelType: typeof travelTypes[number];
 
     fineTuning: SuspensionFineTuning;
 }
@@ -55,8 +67,8 @@ interface SuspensionFineTuning {
 }
 
 interface TransmissionInput {
-    driveType: "fwd" | "rwd" | "awd";
-    engineLayout: "front" | "mid" | "rear";
+    driveType: typeof driveTypes[number];
+    engineLayout: typeof engineLayouts[number];
     power: number;
     torque: number;
     redline: number;
@@ -88,6 +100,7 @@ interface ToMetricConversion {
 }
 
 export interface TunerOutputs {
+    vehicleInfo: VehicleInfo;
     tirePressureFront: number;
     tirePressureRear: number;
     gearRatios: GearRatios;
@@ -100,17 +113,7 @@ export interface TunerOutputs {
 
 interface GearRatios {
     finalDrive: number;
-    ratio1: number;
-    ratio2: number;
-    ratio3: number;
-    ratio4: number;
-    ratio5: number;
-    ratio6: number;
-    ratio7: number;
-    ratio8: number;
-    ratio9: number;
-    ratio10: number;
-    ratio11: number;
+    gearRatios: Array<number>;
 }
 
 interface AlignmentSettings {
@@ -131,6 +134,8 @@ interface SuspensionSettings {
     reboundRear: number;
     bumpFront: number;
     bumpRear: number;
+    rideHeightFront: number;
+    rideHeightRear: number;
 }
 
 interface DifferentialSettings {
@@ -142,18 +147,25 @@ interface DifferentialSettings {
 }
 
 export class TuningCalculator {
-    public calculateTuning(tunerInputs: TunerInputs) {
-        const { vehicleYear, vehicleMake, vehicleModel, gameVersion, tuningType, isMetric, resetDrivetrain, resetFineTuning } = tunerInputs;
+    public calculateTuning(tunerInputs: TunerInputs): TunerOutputs {
+        const { vehicleInfo, gameVersion, tuningType, isMetric, resetDrivetrain, resetFineTuning } = tunerInputs;
 
         let { weight, downforceFront, downforceRear, weightPercentageFront } = tunerInputs.suspensionInput;
-        const { rideHeightFront, rideHeightRear, damperStiffness, travelType } = tunerInputs.suspensionInput;
+        let { rideHeightFront, rideHeightRear, damperStiffness, travelType } = tunerInputs.suspensionInput;
         let { springModFT, arbModFT, reboundModFT, bumpModFT } = tunerInputs.suspensionInput.fineTuning;
 
         let { power, topSpeed, torque } = tunerInputs.transmissionInput;
         const { driveType, engineLayout, redline, gearNum } = tunerInputs.transmissionInput;
         let { finalDriveRatio, firstDriveRatio, firstDriveSpeed } = tunerInputs.transmissionInput.advancedDrivetrain;
 
-        const { tireCompound, tireFront, tireRear, isSquareTire } = tunerInputs.tiresInput;
+        const { tireCompound, tireFront, isSquareTire } = tunerInputs.tiresInput;
+        let { tireRear } = tunerInputs.tiresInput;
+
+        if (isSquareTire) {
+            tireRear.width = tireFront.width;
+            tireRear.rim = tireFront.rim;
+            tireRear.aspectRatio = tireFront.aspectRatio;
+        }
 
         if (resetFineTuning) {
             springModFT = 1.0;
@@ -189,7 +201,7 @@ export class TuningCalculator {
             downforceRear *= toImperialConv.weight;
             weight *= toImperialConv.weight;
 
-            power += toImperialConv.power;
+            power *= toImperialConv.power;
             torque *= toImperialConv.torque;
 
             if (topSpeed !== 0) {
@@ -503,10 +515,10 @@ export class TuningCalculator {
                 bumpRear = 2.4;
                 reboundFront = 8.5;
                 reboundRear = 7.8;
-                bumpFront2 *= 2;
-                bumpRear2 *= 2;
-                reboundFront2 *= 2;
-                reboundRear2 *= 2;
+                bumpFront2 = bumpFront * 2;
+                bumpRear2 = bumpRear * 2;
+                reboundFront2 = reboundFront * 2;
+                reboundRear2 = reboundRear * 2;
             } else {
                 bumpFront = 2.5;
                 bumpRear = 2.4;
@@ -650,7 +662,7 @@ export class TuningCalculator {
         }
 
         // ----------
-        // Determin Brake Settings
+        // Determine Brake Settings
         // ----------
         let brakeForce = 140;
         if (tireCompound == 'race') brakeForce = 140;
@@ -803,10 +815,185 @@ export class TuningCalculator {
         // Gear Tuning
         // ===========
 
+        let finalGearRatios: GearRatios = {
+            finalDrive: 0,
+            gearRatios: new Array<number>(gearNum)
+        }
+
         if (redline != 0) {
+            // Calculate the top speed if it is not provided
             if (topSpeed == 0) {
                 topSpeed = 145;
                 let powerCalc = power;
+                while (powerCalc >= 175 && topSpeed <= 265) {
+                    topSpeed += 15;
+                    powerCalc -= 100;
+                }
+
+                if (isMetric) {
+                    topSpeed = topSpeed * 1.60934;
+                }
+            }
+
+            // Set the drive tire diameter
+            let driveTireDiameter = tireDiameterRear;
+
+            if (driveType == 'fwd') {
+                driveTireDiameter = tireDiameterFront;
+            }
+
+            // Set the first drive ratio
+            if (firstDriveRatio > 0) {
+                finalGearRatios.gearRatios[0] = firstDriveRatio;
+            } else if (finalDriveRatio > 17000) {
+                finalGearRatios.gearRatios[0] = firstDriveRatio;
+            } else {
+                if (driveType == 'rwd') {
+                    finalGearRatios.gearRatios[0] = 2.9;
+                } else if (driveType == 'fwd') {
+                    finalGearRatios.gearRatios[0] = 3.05;
+                } if (driveType == 'awd') {
+                    finalGearRatios.gearRatios[0] = 3.2;
+                }
+
+                let gearCalc = gearNum;
+                while (gearCalc > 4) {
+                    finalGearRatios.gearRatios[0] += 0.05;
+                    gearCalc -= 1;
+                }
+            }
+
+            // Calculates the first drive speed
+            if (firstDriveSpeed > 0) {
+
+            } else if (redline > 17000) {
+                firstDriveSpeed = 65;
+            } else {
+                const speedOverGears = (topSpeed / gearNum);
+
+                if (gearNum == 3) firstDriveSpeed = speedOverGears + 5;
+                else if (gearNum == 4) firstDriveSpeed = speedOverGears + 10;
+                else if (gearNum == 5) firstDriveSpeed = speedOverGears + 15;
+                else if (gearNum == 6) {
+                    if (power >= 800) firstDriveSpeed = speedOverGears + 35;
+                    else if (power >= 600) firstDriveSpeed = speedOverGears + 30;
+                    else if (power >= 400) firstDriveSpeed = speedOverGears + 25;
+                    else firstDriveSpeed = speedOverGears + 20;
+                }
+                else if (gearNum == 7) {
+                    if (power >= 800) firstDriveSpeed = speedOverGears + 35;
+                    else if (power >= 600) firstDriveSpeed = speedOverGears + 35;
+                    else if (power >= 400) firstDriveSpeed = speedOverGears + 30;
+                    else firstDriveSpeed = speedOverGears + 25;
+                }
+                else if (gearNum >= 8) {
+                    if (power >= 800) firstDriveSpeed = speedOverGears + 45;
+                    else if (power >= 600) firstDriveSpeed = speedOverGears + 40;
+                    else if (power >= 400) firstDriveSpeed = speedOverGears + 35;
+                    else firstDriveSpeed = speedOverGears + 30;
+                }
+
+                if (driveType == 'awd') {
+                    firstDriveSpeed *= 0.86;
+                }
+            }
+
+            if (finalDriveRatio == 0) {
+                finalDriveRatio = (redline * driveTireDiameter) / (firstDriveSpeed * finalGearRatios.gearRatios[0] * 336.13);
+            }
+
+            let gearSpeed = firstDriveSpeed;
+            const changeSpeed = (topSpeed - firstDriveSpeed) / (gearNum - 1);
+
+            let gearNumCounter = 1;
+
+            while (gearNumCounter <= gearNum) {
+                gearSpeed += changeSpeed;
+                finalGearRatios.gearRatios[gearNumCounter] = (redline * driveTireDiameter) / (gearSpeed * finalDriveRatio * 336.13);
+                gearNumCounter += 1;
+            }
+        }
+
+        // BEGIN DRAG TUNING
+
+        if (tuningType == 'drag') {
+            arbFront = 1;
+            arbRear = 40;
+            reboundFront = 1;
+            reboundRear = 14;
+            bumpFront = 14;
+            bumpRear = 14;
+            springRateFront = 0;
+            springRateRear = 10000;
+            camberFront = -0.5;
+            camberRear = -0.5;
+            toeFront = -0.1;
+            toeRear = -0.1;
+            caster = 5;
+            brakeBalance = 50;
+            brakeForce = 100;
+            rideHeightFront = 10000;
+            rideHeightRear = 10000;
+
+            if (driveType == 'rwd') {
+                differentialAccRear = 100;
+                differentialDeccRear = 100;
+                tirePressureFront = 35;
+                tirePressureRear = 27.5;
+            } else if (driveType == 'fwd') {
+                differentialAccFront = 100;
+                differentialDeccFront = 0;
+                tirePressureFront = 27.5;
+                tirePressureRear = 35;
+            } else if (driveType == 'awd') {
+                differentialAccFront = 100;
+                differentialDeccFront = 0;
+                differentialAccRear = 100;
+                differentialDeccRear = 100;
+                differentialCenterBalance = 80;
+                tirePressureFront = 27.5;
+                tirePressureRear = 27;
+            }
+
+            if (isMetric) {
+                tirePressureFront *= toMetricConv.pressure;
+                tirePressureRear *= toMetricConv.pressure;
+            }
+        }
+
+        return {
+            vehicleInfo: vehicleInfo,
+            tirePressureFront: tirePressureFront,
+            tirePressureRear: tirePressureRear,
+            gearRatios: finalGearRatios,
+            alignment: {
+                camberFront: camberFront,
+                camberRear: camberRear,
+                toeFront: toeFront,
+                toeRear: toeRear,
+                caster: caster,
+                steeringAngle: steeringAngle
+            },
+            suspension: {
+                arbFront: arbFront,
+                arbRear: arbRear,
+                springFront: springRateFront,
+                springRear: springRateRear,
+                reboundFront: reboundFront,
+                reboundRear: reboundRear,
+                bumpFront: bumpFront,
+                bumpRear: bumpRear,
+                rideHeightFront: rideHeightFront,
+                rideHeightRear: rideHeightRear
+            },
+            brakeBalance: brakeBalance,
+            brakeForce: brakeForce,
+            differential: {
+                accFront: differentialAccFront,
+                accRear: differentialAccRear,
+                deccFront: differentialDeccFront,
+                deccRear: differentialDeccRear,
+                centerBalance: differentialCenterBalance
             }
         }
     }
