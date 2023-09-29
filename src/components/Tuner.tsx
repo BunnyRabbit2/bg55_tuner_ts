@@ -5,7 +5,7 @@ import TunerResults from './TunerResults';
 
 export default function Tuner() {
     return (
-        <div className="container flex w-full mx-auto">
+        <div className="container grid grid-cols-1 md:grid-cols-2 gap-2 w-full mx-auto">
             <EntryForm />
             <TunerResults />
         </div>

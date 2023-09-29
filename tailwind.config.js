@@ -8,9 +8,7 @@ module.exports = {
   },
   daisyui: {
     themes: [
-      "cyberpunk",
-      "synthwave",
-      "night"
+      "cyberpunk"
     ],
   },
   plugins: [
