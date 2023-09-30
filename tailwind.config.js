@@ -8,6 +8,7 @@ module.exports = {
   },
   daisyui: {
     themes: [
+      "business",
       "cyberpunk"
     ],
   },
